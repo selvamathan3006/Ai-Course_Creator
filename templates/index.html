@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Course Creator | Transform Ideas into Learning Experiences</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--radius);
+            color: white;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 8s infinite linear;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-box i {
+            margin-right: 8px;
+            color: var(--accent);
+        }
+
+        .form-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 40px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+        }
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        /* Attractive Box Selection Styles */
+        .selection-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .selection-option {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .selection-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .selection-option .selection-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 15px;
+            background: var(--gray-light);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 400;
+            text-align: center;
+            height: 100%;
+            border: 2px solid transparent;
+        }
+
+        .selection-option input:checked + .selection-box {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .selection-option .selection-box i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .selection-option input:checked + .selection-box i {
+            color: var(--primary);
+        }
+
+        .selection-option .selection-box .title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .selection-option .selection-box .description {
+            font-size: 0.85rem;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .selection-option input:checked + .selection-box .description {
+            color: var(--primary-dark);
+        }
+
+        /* Radio-specific styling */
+        .radio-group .selection-option .selection-box::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .radio-group .selection-option input:checked + .selection-box::before {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: inset 0 0 0 3px white;
+        }
+
+        /* Checkbox-specific styling */
+        .checkbox-group .selection-option .selection-box::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .checkbox-group .selection-option input:checked + .selection-box::before {
+            background: var(--primary);
+            border-color: var(--primary);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .icon-label {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .icon-label i {
+            margin-right: 5px;
+        }
+
+        #generate-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #generate-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        #generate-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        #generate-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #generate-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        #generate-btn:hover:not(:disabled)::after {
+            left: 100%;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(67, 97, 238, 0.2);
+            border-left: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-container {
+            margin: 30px 0;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .progress-percentage {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: var(--gray-light);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 6px;
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(
+                -45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            z-index: 1;
+            background-size: 50px 50px;
+            animation: move 2s linear infinite;
+            border-radius: 6px;
+        }
+
+        @keyframes move {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 50px 50px;
+            }
+        }
+
+        .ai-thinking {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .ai-thinking span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .ai-thinking span:nth-child(1) { animation-delay: -0.32s; }
+        .ai-thinking span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        #results {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: var(--gray-light);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .result-item:hover {
+            transform: translateX(5px);
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .result-item i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+
+        .download-btn {
+            margin-left: auto;
+            padding: 8px 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .status-error {
+            background: rgba(248, 150, 30, 0.1);
+            color: var(--warning);
+            border-left: 4px solid var(--warning);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .feature-highlights {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .feature {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .selection-group {
+                flex-direction: column;
+            }
+            
+            .selection-option {
+                min-width: 100%;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .result-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .download-btn {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        
+        .file-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+        
+        .file-info {
+            flex-grow: 1;
+        }
+        
+        .file-info h4 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .file-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .current-step {
+            margin-top: 15px;
+            font-style: italic;
+            color: var(--gray);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Course Creator</h1>
+            <p class="tagline">Transform your ideas into engaging learning experiences</p>
+            <div class="info-box">
+                <i class="fas fa-clock"></i>This will take approximately 10 minutes to process your request
+                <div class="icon-label"><i class="fas fa-info-circle"></i> <p style="color: white;"> Don't worry, it will run in the background</p></div>
+            </div>
+        </header>
+
+        <div class="feature-highlights">
+            <div class="feature">
+                <i class="fas fa-brain"></i>
+                <h3>AI-Powered</h3>
+                <p>Advanced algorithms create comprehensive course content</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-globe"></i>
+                <h3>Multi-Language</h3>
+                <p>Generate courses in multiple languages with native fluency</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-file-download"></i>
+                <h3>Multiple Formats</h3>
+                <p>Download in PDF, PPT, Audio Scripts, and Quiz formats</p>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form id="course-form">
+                <div class="form-group">
+                    <label for="course-name"><i class="fas fa-book-open"></i> Course Topic</label>
+                    <input type="text" id="course-name" name="course_name" placeholder="e.g., 'Introduction to Quantum Physics'" required>
+                    <div class="icon-label"><i class="fas fa-lightbulb"></i> Be specific for better results</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="language"><i class="fas fa-language"></i> Language</label>
+                    <select id="language" name="language">
+                        <option value="English">English</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Malayalam">Malayalam</option>
+                        <option value="Kannadam">Kannada</option>
+                        <option value="Telungu">Telugu</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="French">French</option>
+                        <option value="German">German</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Korean">Korean</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-sitemap"></i> Course Structure Mode</label>
+                    <div class="selection-group radio-group">
+                        <div class="selection-option">
+                            <input type="radio" id="structure-simple" name="lesson_structure_mode" value="simple" checked>
+                            <label for="structure-simple" class="selection-box">
+                                <i class="fas fa-stream"></i>
+                                <div class="title">Standard Structure</div>
+                                <div class="description">5 well-organized lessons</div>
+                            </label>
+                        </div>
+                        <div class="selection-option">
+                            <input type="radio" id="structure-detailed" name="lesson_structure_mode" value="detailed">
+                            <label for="structure-detailed" class="selection-box">
+                                <i class="fas fa-sitemap"></i>
+                                <div class="title">Detailed Structure</div>
+                                <div class="description">Basics, Core, Implementation</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-download"></i> Select Output Formats</label>
+                    <div class="selection-group checkbox-group">
+                        <div class="selection-option">
+                            <input type="checkbox" id="output-pdf" name="output_format" value="pdf" checked>
+                            <label for="output-pdf" class="selection-box">
+                                <i class="fas fa-file-pdf"></i>
+                                <div class="title">PDF Document</div>
+                                <div class="description">Complete course material</div>
+                            </label>
+                        </div>
+                        <div class="selection-option">
+                            <input type="checkbox" id="output-ppt" name="output_format" value="ppt">
+                            <label for="output-ppt" class="selection-box">
+                                <i class="fas fa-file-powerpoint"></i>
+                                <div class="title">PowerPoint</div>
+                                <div class="description">Presentation slides</div>
+                            </label>
+                        </div>
+                        <div class="selection-option">
+                            <input type="checkbox" id="output-video" name="output_format" value="video">
+                            <label for="output-video" class="selection-box">
+                                <i class="fas fa-file-audio"></i>
+                                <div class="title">Audio Scripts</div>
+                                <div class="description">For audio content</div>
+                            </label>
+                        </div>
+                        <div class="selection-option">
+                            <input type="checkbox" id="output-quiz" name="output_format" value="quiz">
+                            <label for="output-quiz" class="selection-box">
+                                <i class="fas fa-question-circle"></i>
+                                <div class="title">Quiz</div>
+                                <div class="description">Interactive assessment</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="generate-btn">
+                    <i class="fas fa-magic"></i> <span id="generate-btn-text">Generate Course</span>
+                </button>
+            </form>
+        </div>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <h3 id="loading-title">AI is creating your course content</h3>
+            <p id="loading-description">This might take a few minutes for comprehensive courses</p>
+            
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-label">Generation Progress</span>
+                    <span class="progress-percentage" id="progress-percentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+            </div>
+            
+            <p class="current-step" id="current-step">Initializing course generation...</p>
+            
+            <div class="ai-thinking">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div id="results">
+            <!-- Results will be dynamically inserted here -->
+        </div>
+
+        <footer>
+            <p>AI Course Creator &copy; 2025 | Created By Selvamathan S, Shagul A, Deepan N</p>
+        </footer>
+    </div>
+
+    <script>
+        // File mapping for display names and icons
+        const FILE_MAP = {
+            'pdf': {
+                name: 'Course PDF Document',
+                icon: 'fas fa-file-pdf',
+                description: 'Complete course material in PDF format'
+            },
+            'ppt': {
+                name: 'PowerPoint Presentation',
+                icon: 'fas fa-file-powerpoint',
+                description: 'Presentation slides for your course'
+            },
+            'video': {
+                name: 'Audio Scripts',
+                icon: 'fas fa-file-audio',
+                description: 'Scripts for creating audio/video content'
+            },
+            'quiz': {
+                name: 'Quiz & Assessment',
+                icon: 'fas fa-question-circle',
+                description: 'Interactive quiz to test knowledge'
+            }
+        };
+
+        // DOM elements
+        const form = document.getElementById('course-form');
+        const generateBtn = document.getElementById('generate-btn');
+        const generateBtnText = document.getElementById('generate-btn-text');
+        const loadingDiv = document.getElementById('loading');
+        const loadingTitle = document.getElementById('loading-title');
+        const loadingDescription = document.getElementById('loading-description');
+        const resultsDiv = document.getElementById('results');
+        const progressBar = document.getElementById('progress');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const currentStep = document.getElementById('current-step');
+
+        // Store generated files for download
+        let generatedFiles = [];
+
+        // Form submission handler
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            // Clear previous results
+            resultsDiv.innerHTML = '';
+            resultsDiv.style.display = 'none';
+            generatedFiles = [];
+            
+            // Show loading animation
+            loadingDiv.classList.remove('hidden');
+            generateBtn.disabled = true;
+            generateBtnText.textContent = 'Generating...';
+
+            // Get form values
+            const courseName = form.elements['course_name'].value;
+            const language = form.elements['language'].value;
+            const lessonStructureMode = form.elements['lesson_structure_mode'].value;
+            const outputFormatCheckboxes = form.querySelectorAll('input[name="output_format"]:checked');
+            const outputFormats = Array.from(outputFormatCheckboxes).map(cb => cb.value);
+
+            // Validate at least one output format is selected
+            if (outputFormats.length === 0) {
+                resultsDiv.innerHTML = '<div class="status-message status-error">Please select at least one output format.</div>';
+                resultsDiv.style.display = 'block';
+                cleanupUI();
+                return;
+            }
+
+            try {
+                // Update loading message for scaffold generation
+                loadingTitle.textContent = 'AI is creating your course scaffold';
+                loadingDescription.textContent = 'Building the course structure...';
+                currentStep.textContent = 'Initializing course generation...';
+                
+                // Simulate progress for scaffold generation
+                await simulateProgress(20, 2000, 'Creating course outline...');
+
+                // Generate scaffold + full content
+                const scaffoldResponse = await fetch('/api/generate-scaffold', {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({
+                        course_name: courseName,
+                        language: language,
+                        output_formats: outputFormats,
+                        lesson_structure: lessonStructureMode
+                    })
+                });
+
+                if (!scaffoldResponse.ok) throw new Error('Failed to generate scaffold.');
+                const data = await scaffoldResponse.json();
+                const persistentData = {
+                    course_name: data.course_name,
+                    language: data.language,
+                    full_content: data.full_content,
+                    scaffold: data.scaffold
+                };
+
+                // Update progress after scaffold generation
+                await simulateProgress(30, 1000, 'Scaffold generated. Preparing content...');
+
+                // Sequentially generate files
+                for (let i = 0; i < outputFormats.length; i++) {
+                    const fileType = outputFormats[i];
+                    generateBtnText.textContent = `Generating ${FILE_MAP[fileType].name} (${i+1}/${outputFormats.length})`;
+                    
+                    // Update loading message for file generation
+                    loadingTitle.textContent = `Generating ${FILE_MAP[fileType].name}`;
+                    currentStep.textContent = `Creating ${FILE_MAP[fileType].name.toLowerCase()}...`;
+                    
+                    // Simulate progress for this file
+                    const progressStart = 30 + (i * (70 / outputFormats.length));
+                    const progressEnd = 30 + ((i + 1) * (70 / outputFormats.length));
+                    await simulateProgress(progressEnd, 1500, `Generating ${FILE_MAP[fileType].name}...`);
+
+                    const fileResponse = await fetch('/api/generate-file', {
+                        method:'POST',
+                        headers:{'Content-Type':'application/json'},
+                        body: JSON.stringify({file_type:fileType, ...persistentData})
+                    });
+
+                    if (!fileResponse.ok) {
+                        const error = await fileResponse.json();
+                        // Store error for display in results
+                        generatedFiles.push({
+                            type: fileType,
+                            success: false,
+                            error: error.error || 'Failed to generate file'
+                        });
+                        continue;
+                    }
+
+                    // Get the file blob and filename
+                    const blob = await fileResponse.blob();
+                    const disposition = fileResponse.headers.get('content-disposition');
+                    const filename = disposition ? disposition.split('filename=')[1].replace(/"/g,'') : `${fileType}_${courseName.replace(/\s+/g, '_')}.${fileType}`;
+                    
+                    // Store file data for download
+                    generatedFiles.push({
+                        type: fileType,
+                        success: true,
+                        blob: blob,
+                        filename: filename
+                    });
+                    
+                    // Update progress after each file
+                    currentStep.textContent = `${FILE_MAP[fileType].name} generated successfully!`;
+                }
+
+                // Final progress update
+                await simulateProgress(100, 1000, 'Finalizing course materials...');
+                
+                // Display results with download buttons
+                displayResults();
+
+            } catch(err) {
+                resultsDiv.innerHTML = `<div class="status-message status-error">System Error: ${err.message}</div>`;
+                resultsDiv.style.display = 'block';
+            } finally {
+                cleanupUI();
+            }
+        });
+
+        // Display results with download buttons
+        function displayResults() {
+            let resultsHTML = '<h2><i class="fas fa-check-circle" style="color: var(--success);"></i> Your Course is Ready!</h2>';
+            
+            // Add download buttons for successfully generated files
+            generatedFiles.forEach(file => {
+                if (file.success) {
+                    resultsHTML += `
+                        <div class="result-item">
+                            <i class="${FILE_MAP[file.type].icon} file-icon"></i>
+                            <div class="file-info">
+                                <h4>${FILE_MAP[file.type].name}</h4>
+                                <p>${FILE_MAP[file.type].description}</p>
+                            </div>
+                            <button style="color:white" class="download-btn" data-filename="${file.filename}" data-blob="${URL.createObjectURL(file.blob)}">
+                                <i class="fas fa-download" ></i> Download
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    resultsHTML += `
+                        <div class="result-item">
+                            <i class="${FILE_MAP[file.type].icon} file-icon"></i>
+                            <div class="file-info">
+                                <h4>${FILE_MAP[file.type].name}</h4>
+                                <p style="color: var(--warning);">Failed to generate: ${file.error}</p>
+                            </div>
+                            <button class="download-btn" disabled style="opacity: 0.5; cursor: not-allowed;">
+                                <i class="fas fa-times"></i> Unavailable
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+            
+            resultsDiv.innerHTML = resultsHTML;
+            resultsDiv.style.display = 'block';
+            
+            // Add event listeners to download buttons
+            document.querySelectorAll('.download-btn:not(:disabled)').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filename = this.getAttribute('data-filename');
+                    const blobUrl = this.getAttribute('data-blob');
+                    
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                });
+            });
+        }
+
+        // Clean up UI after generation
+        function cleanupUI() {
+            loadingDiv.classList.add('hidden');
+            generateBtn.disabled = false;
+            generateBtnText.textContent = 'Generate Course';
+            progressBar.style.width = '0%';
+            progressPercentage.textContent = '0%';
+        }
+
+        // Simulate progress animation
+        function simulateProgress(target, duration, stepMessage) {
+            return new Promise((resolve) => {
+                let startWidth = parseInt(progressBar.style.width) || 0;
+                const increment = (target - startWidth) / (duration / 50);
+                let currentWidth = startWidth;
+                
+                if (stepMessage) {
+                    currentStep.textContent = stepMessage;
+                }
+                
+                const timer = setInterval(() => {
+                    currentWidth += increment;
+                    const roundedWidth = Math.min(Math.round(currentWidth), target);
+                    progressBar.style.width = roundedWidth + '%';
+                    progressPercentage.textContent = roundedWidth + '%';
+                    
+                    if (currentWidth >= target) {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, 50);
+            });
+        }
+
+        // Enhanced selection box interactions
+        document.querySelectorAll('.selection-option').forEach(option => {
+            option.addEventListener('mouseenter', function() {
+                if (!this.querySelector('input').checked) {
+                    this.querySelector('.selection-box').style.transform = 'translateY(-2px)';
+                    this.querySelector('.selection-box').style.boxShadow = '0 3px 10px rgba(0,0,0,0.1)';
+                }
+            });
+            
+            option.addEventListener('mouseleave', function() {
+                if (!this.querySelector('input').checked) {
+                    this.querySelector('.selection-box').style.transform = 'translateY(0)';
+                    this.querySelector('.selection-box').style.boxShadow = 'none';
+                }
+            });
+        });
+
+        // Add focus effects to form elements
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
